@@ -44,16 +44,19 @@ RUN echo 'deb https://artifacts.elastic.co/packages/6.x-prerelease/apt stable ma
 RUN set -x \
 	&& apt-get update \
 	&& apt-get install -y --no-install-recommends kibana \
-	&& rm -rf /var/lib/apt/lists/* \
-	&& sed -ri "s!^(\#\s*)?(server\.host:).*!\2 '0.0.0.0'!" /etc/kibana/kibana.yml \
-	&& grep -q "^server\.host: '0.0.0.0'\$" /etc/kibana/kibana.yml \
-	&& sed -ri "s!^(\#\s*)?(elasticsearch\.url:).*!\2 'http://elasticsearch:9200'!" /etc/kibana/kibana.yml \
-	&& grep -q "^elasticsearch\.url: 'http://elasticsearch:9200'\$" /etc/kibana/kibana.yml
+	&& rm -rf /var/lib/apt/lists/*
+
+	#  \
+	# && sed -ri "s!^(\#\s*)?(server\.host:).*!\2 '0.0.0.0'!" /etc/kibana/kibana.yml \
+	# && grep -q "^server\.host: '0.0.0.0'\$" /etc/kibana/kibana.yml \
+	# && sed -ri "s!^(\#\s*)?(elasticsearch\.url:).*!\2 'http://elasticsearch:9200'!" /etc/kibana/kibana.yml \
+	# && grep -q "^elasticsearch\.url: 'http://elasticsearch:9200'\$" /etc/kibana/kibana.yml
 
 ENV PATH /usr/share/kibana/bin:$PATH
 
-COPY docker-entrypoint.sh /
+COPY kibana.yml /kibana/kibana.yml
+COPY entrypoint.sh /
 
 EXPOSE 5601
-ENTRYPOINT ["/docker-entrypoint.sh"]
+ENTRYPOINT ["/entrypoint.sh"]
 CMD ["kibana"]

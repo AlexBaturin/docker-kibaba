@@ -1,0 +1,11 @@
+server.port: 5601
+server.host: "0"
+server.name: "${KIBANA_FQDN}"
+elasticsearch.url: "http://${ELASTICSEARCH_HOST}:${ELASTICSEARCH_PORT}"
+elasticsearch.username: "${ELASTIC_USER}"
+elasticsearch.password: "${ELASTIC_PASSWD}"
+# logging.dest: /var/log/kibana.log
+logging.silent: true
+# logging.quiet: true
+# logging.verbose: false
+i18n.defaultLocale: "en"
